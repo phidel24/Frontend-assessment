@@ -1,127 +1,128 @@
-# HSV Message Analytics Dashboard
+# HSV Fan Message Dashboard
 
-A Next.js dashboard that analyzes sentiment and engagement patterns from HSV fan messages stored in MariaDB.
+Hey there! 👋 This is a dashboard built to analyze messages from HSV fans. It's basically a Next.js app that connects to a MariaDB database and shows some cool insights about what fans are talking about.
 
-## Features
+## What it does
 
-- **Sentiment Analysis**: Shows positive vs negative message distribution with average scores
-- **Message Statistics**: Total messages, average characters/words, emoji usage percentage
-- **Topic Analysis**: Categorizes messages into topics like "Aufstieg", "Bier/Sponsoring", "Präsidentschaft"
-- **User Engagement**: Tracks most active users and their message patterns
-- **Real-time Data**: Live connection to MariaDB with seeded German fan messages
+- **Sentiment stuff**: Shows you how positive or negative the messages are
+- **Message stats**: Total messages, average length, emoji usage - the usual metrics
+- **Topic breakdown**: Groups messages into topics like "Aufstieg", "Bier/Sponsoring", "Präsidentschaft"
+- **User tracking**: See who's posting the most and their patterns
+- **Live data**: This connects to MariaDB with some German fan messages seeded
 
-## Tech Stack
+## Tech I used
 
 - **Frontend**: Next.js 14, React 18, TypeScript
-- **Styling**: Tailwind CSS, Framer Motion for animations
-- **Charts**: Recharts for data visualization
-- **Database**: MariaDB with sentiment analysis fields
-- **Deployment**: Docker Compose for easy setup
+- **Styling**: Tailwind CSS (love it), Framer Motion for smooth animations
+- **Charts**: Recharts for the data viz
+- **Database**: MariaDB with sentiment analysis
+- **Deployment**: Docker Compose to make setup easy
 
-## Getting Started
+## Getting it running
 
-### Prerequisites
+### What you need
 - Docker and Docker Compose
 - Node.js 18+ and npm
 
-### Setup
+### Setup steps
 
-1. **Clone and install dependencies**
+1. **Get the dependencies**
    ```bash
    cd frontend-assessment
    npm install
    ```
 
-2. **Start the database and frontend**
+2. **Fire up the database and frontend**
    ```bash
    # From the root directory (where docker-compose.yml is)
    docker-compose up --build
    ```
    
-   Docker takes care of the database setup, it starts:
-   - MariaDB on port 3306 with seeded data
+   This starts:
+   - MariaDB on port 3306 with some sample data
    - Next.js dev server on port 3000
 
-3. **Access the dashboard**
+3. **Check it out**
    ```
    http://localhost:3000
    ```
 
-## Data Structure
+## About the data
 
-The `message` table contains fan messages with these key fields:
+The `message` table has fan messages with these fields:
 
-- `text`: The actual message content
-- `sentiment_score`: Numeric sentiment value (-1 to 1)
+- `text`: The actual message
+- `sentiment_score`: How positive/negative (-1 to 1)
 - `sentiment_label`: "positive" or "negative"
-- `char_count`: Character count per message
-- `word_count`: Word count per message
-- `has_emojis`: Boolean flag for emoji usage
-- `user_uid`: Unique user identifier
-- `creationdate`: Timestamp
+- `char_count`: Character count
+- `word_count`: Word count
+- `has_emojis`: Whether it has emojis
+- `user_uid`: User ID
+- `creationdate`: When it was posted
 
-The database comes pre-seeded with German HSV fan messages that have been enriched with sentiment analysis.
+This is already pre-seeded with German HSV fan messages and added sentiment analysis.
 
-## How It Works
+## How it works
 
-### Database Connection
-- `src/lib/db.ts` handles all database queries
-- Uses environment variables from `.env` file
-- Connection pooling for efficient queries
+### Database 
+- `src/lib/db.ts` handles all the database queries
+- Uses environment variables from `.env`
+- Each query creates a new connection and closes it after use
 
-### Key Components
+
+### Main components
 
 **Stats Cards** (`src/components/StatsCards.tsx`)
-- Shows total messages, unique users, emoji usage
-- Animated cards with color-coded metrics
+- This shows the total messages, unique users, emoji usage
+- Nice animated cards with color-coded metrics
 
 **Sentiment Chart** (`src/components/SentimentChart.tsx`)
-- Pie chart of positive vs negative messages
+- There is a Pie chart showing positive vs negative messages
 - Displays average sentiment scores
 
 **Topic Analysis** (`src/components/TopicAnalysis.tsx`)
-- Bar chart of top discussion topics
+- There is a Bar chart of top discussion topics
 - Uses keyword matching to categorize messages
 
 **Message Timeline** (`src/components/MessageTimeline.tsx`)
 - Recent messages with sentiment indicators
 - Shows character/word counts
 
-### Data Flow
-1. Server components fetch data from MariaDB
-2. Data is processed and formatted for charts
-3. Client components render interactive visualizations
-4. Real-time updates when database changes
+### Data flow
+1. Server components grab data from MariaDB
+2. Data gets processed and formatted for charts
+3. Client components render the interactive visualizations
+4. Updates in real-time when database changes
 
 ## Development
 
-### Running Locally
+### Running locally
 ```bash
-# Start database only
+# Just start the database
 docker-compose up db
 
-# In another terminal, start frontend
+# In another terminal, start the frontend
 cd frontend-assessment
 npm run dev
 ```
 
-### Environment Variables
+### Environment variables
 Create a `.env` file in the frontend-assessment directory:
 ```env
 DB_HOST=localhost
 DB_PORT=3306
-MYSQL_USER=candidate
-MYSQL_PASSWORD=!Assessment123
-MYSQL_DATABASE=u482046758_oneconnect
+MYSQL_USER
+MYSQL_PASSWORD
+MYSQL_DATABASE
 ```
 
 ### Testing
 ```bash
 npm run test:db
 ```
-Runs database connection and query tests.
+Runs the database connection and query tests.
 
-## Project Structure
+## Project structure
 
 ```
 frontend-assessment/
@@ -138,4 +139,4 @@ frontend-assessment/
 └── docker-compose.yml      # Docker setup
 ```
 
-The dashboard focuses on practical insights for understanding fan engagement patterns, sentiment trends, and discussion topics around HSV.
+The dashboard gives you practical insights into fan engagement patterns, sentiment trends, and what topics HSV fans are discussing most.
